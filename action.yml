@@ -1,0 +1,30 @@
+name: 'TVLGenerator Setup'
+description: 'Set up the necessary environment'
+inputs:
+  checkout_ref:
+    description: >
+      Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+    default: ''
+    required: false
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout_ref }}
+    - name: 'Install packages'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install graphviz-dev util-linux
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+    - name: 'Install python dependencies'
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi

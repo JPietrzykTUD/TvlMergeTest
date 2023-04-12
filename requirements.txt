@@ -1,0 +1,13 @@
+PyYAML
+Jinja2
+wheel
+MarkupSafe
+neato
+networkx
+pygraphviz
+wget
+sphinx
+sphinx_rtd_theme
+breathe
+exhale
+py-cpuinfo
