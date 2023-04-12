@@ -1,6 +1,12 @@
 name: 'tvl-generate-build'
 
-on: ['workflow_call']
+on:
+  workflow_call:
+    inputs:
+      checkout_ref:
+        description: >
+           Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+        default: ''
 
 permissions:
   contents: read
