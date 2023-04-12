@@ -12,4 +12,4 @@ jobs:
   validate-and-build:
     uses: ./.github/workflows/generate_build_tvl.yml
     with:
-      ref: ${{ github.event.pull_request.head.sha }}
+      checkout_ref: ${{ github.event.pull_request.head.sha }}
