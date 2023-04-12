@@ -4,13 +4,12 @@
 name: 'generator-test'
 
 #on: ['workflow_call']
-on:
-  workflow_call:
-    inputs:
-      checkout_ref:
-        description: >
-          Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
-        default: ''
+inputs:
+  checkout_ref:
+    description: >
+      Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+    default: ''
+    required: false
 
 permissions:
   contents: read
