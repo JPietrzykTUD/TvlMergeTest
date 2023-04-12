@@ -9,8 +9,9 @@ on:
     inputs:
       checkout_ref:
         description: >
-           Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+          Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
         default: ''
+
 permissions:
   contents: read
 
