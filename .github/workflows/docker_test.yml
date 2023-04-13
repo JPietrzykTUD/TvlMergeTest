@@ -37,12 +37,9 @@ jobs:
     outputs:
       # this is a workaround since we cannot use environment variables within the container specs in the subsequent job
       image:    ${{ steps.imageoutput_creation.outputs.image }}
-      rootpath: ${{ steps.rootpathoutput_creation.outputs.rootpath }}
     steps:
       - id: imageoutput_creation
         run: echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG"
-      - id: rootpathoutput_creation
-      run: echo "::set-output name=rootpath::$CONTAINER_TVLGEN_ROOT"
   generate:
     name: Generate TVL
     needs: stuff 
@@ -51,9 +48,9 @@ jobs:
     container:
       image: ${{ needs.stuff.outputs.image }}
       volumes:
-        - ${{ github.workspace }}:${{ needs.stuff.outputs.rootpath }}
+        - ${{ github.workspace }}:/tvlgen
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
       - name: Running Generation
-        run: cmake -S $CONTAINER_TVLGEN_ROOT -B $CONTAINER_TVLGEN_ROOT/tvl
+        run: cmake -S /tvlgen -B /tvlgen/tvl
