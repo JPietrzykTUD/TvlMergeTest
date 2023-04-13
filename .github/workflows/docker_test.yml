@@ -38,7 +38,7 @@ jobs:
       image_name: ${{ steps.step1.outputs.image_name }}
     steps:
       - id: step1
-        run: echo "${{ env.DOCKERHUB_REGISTRY }}/${{ env.DOCKERHUB_NAMESPACE }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG}} " >> "$GITHUB_OUTPUT"
+        run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG" >> "$GITHUB_OUTPUT"
   generate:
     name: Generate TVL
     needs: stuff 
