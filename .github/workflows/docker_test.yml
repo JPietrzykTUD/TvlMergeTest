@@ -37,6 +37,8 @@ jobs:
     outputs:
       image_name: ${{ steps.step1.outputs.image_name }}
     steps:
+      - name: "BLA"
+        run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG"
       - id: step1
         run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG" >> "$GITHUB_OUTPUT"
   generate:
