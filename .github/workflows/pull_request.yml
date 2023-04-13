@@ -12,3 +12,8 @@ jobs:
     secrets: inherit
     with:
       checkout_ref: ${{ github.event.pull_request.head.sha }}
+  validate-primitives:
+    uses: ./.github/workflows/validate_primitives.yml
+    secrets: inherit
+    with:
+      checkout_ref: ${{ github.event.pull_request.head.sha }}

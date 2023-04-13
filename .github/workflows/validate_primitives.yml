@@ -1,0 +1,40 @@
+name: 'validate-tvlgen'
+
+on:
+  workflow_call:
+    inputs:
+      checkout_ref:
+        description: >
+          Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+        default: ''
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  init-env:
+    uses: ./.github/workflows/init_env.yml
+    secrets: inherit
+    with:
+      checkout_ref: ${{ inputs.checkout_ref }}
+  build-and-test:
+    name: Build and test TVL 
+    needs: init-env
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ needs.init-env.outputs.image }}
+      volumes:
+        - ${{ github.workspace }}:/tvlgen
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          checkout_ref: ${{ inputs.checkout_ref }}
+      - name: Generate TVL
+        run: cmake -S /tvlgen -B /tvlgen/tvl
+      - name: Build TVL and Tests
+        run: make -C /tvlgen/tvl
+      - name: Run Tests
+        run: /tvlgen/tvl/tvl/generator_output/src/test/tvl_test
