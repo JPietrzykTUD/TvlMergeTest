@@ -14,7 +14,7 @@ jobs:
           ID=$(docker build -q -t tvlgen_docker .)
           docker tag $ID tvlgen_docker:latest
       - name: Push Docker Image
-        run: docker push ghcr.io/JPietrzykTUD/tvlgen_docker:latest
+        run: docker push ghcr.io/jpietrzyktud/tvlgen_docker:latest
   generate:
     name: Generate TVL
     needs: create-env
