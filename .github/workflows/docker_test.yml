@@ -37,8 +37,8 @@ jobs:
     outputs:
       image: ${{ steps.imageoutput.outputs.image }}
     steps:
-      - name: "BLA"
-        run: echo "${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
+      # - name: "BLA"
+        # run: echo "${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
       - id: imageoutput
         run: echo "::set-output name=image::${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
   generate:
