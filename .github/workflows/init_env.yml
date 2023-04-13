@@ -4,7 +4,7 @@ env:
   DOCKERHUB_NAMESPACE: jpietrzyktud
   DOCKERHUB_REPOSITORY: tvlgen
   DOCKERHUB_REGISTRY: docker.io
-  DOCKER_IMAGE_TAG: ${{ github.ref_name }} 
+  DOCKER_IMAGE_TAG: ${{ github.head_ref || github.ref_name }} 
   
 on: 
   workflow_call:

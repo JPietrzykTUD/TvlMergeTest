@@ -9,5 +9,6 @@ on:
 jobs:
   validate-generator:
     uses: ./.github/workflows/validate_generator.yml
+    secrets: inherit
     with:
       checkout_ref: ${{ github.event.pull_request.head.sha }}

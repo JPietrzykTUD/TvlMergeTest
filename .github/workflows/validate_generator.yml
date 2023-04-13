@@ -16,9 +16,10 @@ permissions:
 jobs:
   init-env:
     uses: ./.github/workflows/init_env.yml
+    secrets: inherit
     with:
       checkout_ref: ${{ inputs.checkout_ref }}
-  validate:
+  validate-generator:
     name: Checking Generator Sources
     needs: init-env
     runs-on: ubuntu-latest
@@ -37,5 +38,14 @@ jobs:
           flake8 /tvlgen --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 /tvlgen --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  test-generation:
+    name: Checking whether generation is possible
+    needs: init-env
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ needs.init-env.outputs.image }}
+      volumes:
+        - ${{ github.workspace }}:/tvlgen
+    steps:
       - name: Running Generation
         run: python3 /tvlgen/main.py
