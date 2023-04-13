@@ -1,16 +1,16 @@
 name: 'docker-test'
 
 on: push
+env:
+  DOCKERHUB_REPOSITORY: tvlgen
+  DOCKERHUB_REGISTRY: docker.io
+  DOCKER_IMAGE_TAG: ${{ github.ref }} 
+  CONTAINER_TVLGEN_ROOT: /tvlgen
 
 jobs:
   create-env:
     name: Create and push Docker container
     runs-on: ubuntu-latest
-    env:
-      DOCKERHUB_REPOSITORY: tvlgen
-      DOCKERHUB_REGISTRY: docker.io
-      DOCKER_IMAGE_TAG: ${{ github.ref }} 
-      CONTAINER_TVLGEN_ROOT: /tvlgen
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
