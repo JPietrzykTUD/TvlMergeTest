@@ -14,12 +14,12 @@ on:
         default: ''
         required: false
         type: string
-		outputs:
-			# this is a workaround since we cannot use environment variables within the container specs in the subsequent job
-			image:
-				description: "Name of the built docker image."
-				value: ${{ jobs.create-env.outputs.image }}
-	
+    outputs:
+      # this is a workaround since we cannot use environment variables within the container specs in the subsequent job
+      image:
+        description: "Name of the built docker image."
+        value: ${{ jobs.create-env.outputs.image }}
+
 jobs:
   create-env:
     name: Create and push Docker container
