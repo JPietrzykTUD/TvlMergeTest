@@ -24,11 +24,11 @@ jobs:
         with:
           images: jpietrzyktud/tvlgen
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: type=ref,enable=true,priority=600,prefix=,suffix=,event=branch
+          tags: jpietrzyktud/tvlgen:latest
           #labels
       #- name: Push Docker Image
       #  run: docker push ghcr.io/jpietrzyktud/tvlgen_docker:latest
