@@ -2,6 +2,16 @@ name: 'docker-test'
 
 on: push
 
+env:
+  DOCKERHUB_REPOSITORY: tvlgen
+  DOCKERHUB_REGISTRY: docker.io
+  DOCKERHUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  DOCKER_IMAGE: ${{ env.DOCKERHUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}
+  DOCKER_IMAGE_TAGGED:  ${{ env.DOCKER_IMAGE }}:${{ github.ref }}
+  DOCKERHUB_IMAGE_FQN: ${{ env.DOCKERHUB_REGISTRY }}/${{ DOCKER_IMAGE_TAGGED }}
+  CONTAINER_TVLGEN_ROOT: /tvlgen
+
 jobs:
   create-env:
     name: Create and push Docker container
@@ -22,13 +32,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          images: jpietrzyktud/tvlgen
+          images: ${{ env.DOCKER_IMAGE }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: jpietrzyktud/tvlgen:latest
+          tags: ${{ env.DOCKER_IMAGE_TAGGED }}
           #labels
       #- name: Push Docker Image
       #  run: docker push ghcr.io/jpietrzyktud/tvlgen_docker:latest
@@ -37,13 +47,11 @@ jobs:
     needs: create-env
     runs-on: ubuntu-latest
     container:
-      image: tvlgen:latest
+      image: ${DOCKERHUB_IMAGE_FQN}
       volumes:
-        - ${{ github.workspace }}:/tvlgen
+        - ${{ github.workspace }}:${{ env.CONTAINER_TVLGEN_ROOT }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - name: Running composer install
-        run: composer install
       - name: Running Generation
-        run: cmake -B tvl
+        run: cmake -S ${{ env.CONTAINER_TVLGEN_ROOT }} -B ${{ env.CONTAINER_TVLGEN_ROOT }/tvl
