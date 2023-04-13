@@ -1,0 +1,19 @@
+name: 'docker-test'
+
+on: push
+
+jobs:
+  generate:
+    name: Generate TVL
+    runs-on: ubuntu-latest
+    container:
+      image: composer:latest
+      volumes:
+        - ${{ github.workspace }}:/tvl
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Running composer install
+        run: composer install
+      - name: Running Generation
+        run: cmake -B tvl
