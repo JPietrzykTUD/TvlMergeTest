@@ -23,23 +23,23 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          images: ${{ secrets.DOCKER_HUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}
+          images: ${{ secrets.DOCKER_HUB_USER }}/$DOCKERHUB_REPOSITORY
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
+          tags: ${{ secrets.DOCKER_HUB_USER }}/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG
   generate:
     name: Generate TVL
     needs: create-env
     runs-on: ubuntu-latest
     container:
-      image: "${{ env.DOCKERHUB_REGISTRY }}/${{ secrets.DOCKER_HUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}"
+      image: $DOCKERHUB_REGISTRY/${{ secrets.DOCKER_HUB_USER }}/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG
       volumes:
-        - ${{ github.workspace }}:${{ env.CONTAINER_TVLGEN_ROOT }}
+        - ${{ github.workspace }}:$CONTAINER_TVLGEN_ROOT
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
       - name: Running Generation
-        run: cmake -S ${{ env.CONTAINER_TVLGEN_ROOT }} -B ${{ env.CONTAINER_TVLGEN_ROOT }/tvl
+        run: cmake -S $CONTAINER_TVLGEN_ROOT -B $CONTAINER_TVLGEN_ROOT/tvl
