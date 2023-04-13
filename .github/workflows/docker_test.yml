@@ -36,4 +36,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "BLA"
-        run: echo "${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
+        run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG"
