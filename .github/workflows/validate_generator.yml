@@ -29,7 +29,9 @@ jobs:
         - ${{ github.workspace }}:/tvlgen
     steps:
       - name: Write out used image 
-        run: echo "HERE!!! $needs.init-env.outputs.image  STRANGE"
+        run: echo HERE!!! $needs.init-env.outputs.image  STRANGE
+      - name: Echo container image
+        run: echo ${{ needs.validate-generator.container.image }}        
       - name: Check out the repo
         uses: actions/checkout@v3
         with:
