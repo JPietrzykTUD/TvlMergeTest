@@ -34,6 +34,24 @@ jobs:
   #         tags: ${{ env.DOCKERHUB_NAMESPACE }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
   stuff:
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.imageoutput.outputs.image }}
     steps:
-      - name: "BLA"
-        run: echo "${DOCKERHUB_REGISTRY}"
+      # - name: "BLA"
+        # run: echo "${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}ffwefwe"
+      - id: imageoutput
+        run: echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG"
+  generate:
+    name: Generate TVL
+    needs: stuff 
+    #create-env
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ needs.stuff.outputs.image }}
+      volumes:
+        - ${{ github.workspace }}:$CONTAINER_TVLGEN_ROOT
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Running Generation
+        run: cmake -S $CONTAINER_TVLGEN_ROOT -B $CONTAINER_TVLGEN_ROOT/tvl
