@@ -35,7 +35,7 @@ jobs:
     needs: create-env
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.DOCKERHUB_REGISTRY }}/${{ secrets.DOCKER_HUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ evn.DOCKER_IMAGE_TAG }}
+      image: ${{ env.DOCKERHUB_REGISTRY }}/${{ secrets.DOCKER_HUB_USER }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }}
       volumes:
         - ${{ github.workspace }}:${{ env.CONTAINER_TVLGEN_ROOT }}
     steps:
