@@ -1,8 +1,0 @@
-version: '3'
-services:
-  delilah:
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
-    build: .
-    # volumes:
-    #   - .:/tvl
