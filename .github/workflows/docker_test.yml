@@ -35,19 +35,19 @@ jobs:
   stuff:
     runs-on: ubuntu-latest
     outputs:
-      image_name: ${{ steps.step1.outputs.image_name }}
+      image: ${{ steps.imageoutput.outputs.image }}
     steps:
       - name: "BLA"
-        run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG"
-      - id: step1
-        run: echo "$DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:$DOCKER_IMAGE_TAG" >> "$GITHUB_OUTPUT"
+        run: echo "${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
+      - id: imageoutput
+        run: echo "::set-output name=image::${{DOCKERHUB_REGISTRY}}/${{DOCKERHUB_NAMESPACE}}/${{DOCKERHUB_REPOSITORY}}:${{DOCKER_IMAGE_TAG}}"
   generate:
     name: Generate TVL
     needs: stuff 
     #create-env
     runs-on: ubuntu-latest
     container:
-      image: ${{ needs.stuff.outputs.image_name }}
+      image: ${{ needs.stuff.outputs.image }}
       volumes:
         - ${{ github.workspace }}:$CONTAINER_TVLGEN_ROOT
     steps:
