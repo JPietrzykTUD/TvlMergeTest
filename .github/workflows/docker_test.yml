@@ -5,7 +5,7 @@ env:
   DOCKERHUB_NAMESPACE: jpietrzyktud
   DOCKERHUB_REPOSITORY: tvlgen
   DOCKERHUB_REGISTRY: docker.io
-  DOCKER_IMAGE_TAG: ${{ github.ref }} 
+  DOCKER_IMAGE_TAG: ${{ github.ref_name }} 
   CONTAINER_TVLGEN_ROOT: /tvlgen
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          images: $DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY
+          images: ${{ env.DOCKERHUB_NAMESPACE }}/${{ env.DOCKERHUB_REPOSITORY }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -36,7 +36,7 @@ jobs:
     needs: create-env
     runs-on: ubuntu-latest
     container:
-      image: $DOCKERHUB_REGISTRY/$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY$DOCKER_IMAGE_TAG
+      image: ${{ env.DOCKERHUB_REGISTRY }}/${{ env.DOCKERHUB_NAMESPACE }}/${{ env.DOCKERHUB_REPOSITORY }}${{ env.DOCKER_IMAGE_TAG }}
       volumes:
         - ${{ github.workspace }}:$CONTAINER_TVLGEN_ROOT
     steps:
