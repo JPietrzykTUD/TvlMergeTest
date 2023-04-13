@@ -7,11 +7,10 @@ env:
   DOCKER_IMAGE_TAG: ${{ github.ref_name }} 
   
 on: 
-	workflow_call:
+  workflow_call:
     inputs:
       checkout_ref:
-        description: >
-          Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
+        description: Branch / tag / SHA which is forwarded to actions/checkout@v3::ref
         default: ''
         required: false
         type: string
