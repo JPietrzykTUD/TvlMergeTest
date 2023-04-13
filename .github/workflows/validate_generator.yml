@@ -28,6 +28,8 @@ jobs:
       volumes:
         - ${{ github.workspace }}:/tvlgen
     steps:
+      - name: Write out used image 
+        run: echo "${{ needs.init-env.outputs.image }}"
       - name: Check out the repo
         uses: actions/checkout@v3
         with:
@@ -47,5 +49,9 @@ jobs:
       volumes:
         - ${{ github.workspace }}:/tvlgen
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          checkout_ref: ${{ inputs.checkout_ref }}
       - name: Running Generation
         run: python3 /tvlgen/main.py
