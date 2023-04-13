@@ -32,6 +32,8 @@ jobs:
         run: echo HERE!!! $needs.init-env.outputs.image  STRANGE
       - name: Echo container image
         run: echo ${{ needs.validate-generator.container.image }}        
+      - name: Print container image
+        run: echo "Container image: ${{ github.job.container.image }}"
       - name: Check out the repo
         uses: actions/checkout@v3
         with:
